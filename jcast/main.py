@@ -101,10 +101,10 @@ def run_jcast(args) -> None:
                                         )
 
        
-        Concurrent futures
+        # Concurrent futures
        
         import concurrent.futures
-        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()-1) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=args.num_threads) as pool:
             for i, f in enumerate(tqdm.tqdm(pool.map(
                     translate_one_partial,
                     junctions,
