@@ -100,39 +100,39 @@ def run_jcast(args) -> None:
                                         pred_bound=min_count,
                                         )
 
-        #
-        # Concurrent futures
-        #
-        # import concurrent.futures
-        # with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()-1) as pool:
-        #     for i, f in enumerate(tqdm.tqdm(pool.map(
-        #             translate_one_partial,
-        #             junctions,
-        #     ),
-        #             total=len(junctions),
-        #             desc='Processing {0} Junctions'.format(rma.jxn_type[0]),
-        #     )):
-        #         logger.info('>>>>>> Doing {0} junction {1} for gene {2} {3}'.format(junctions[i].junction_type,
-        #                                                                               junctions[i].name,
-        #                                                                               junctions[i].gene_symbol,
-        #                                                                               junctions[i].gene_id,
-        #                                                                           ))
-        #         logger.info(f)
+       
+        Concurrent futures
+       
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()-1) as pool:
+            for i, f in enumerate(tqdm.tqdm(pool.map(
+                    translate_one_partial,
+                    junctions,
+            ),
+                    total=len(junctions),
+                    desc='Processing {0} Junctions'.format(rma.jxn_type[0]),
+            )):
+                logger.info('>>>>>> Doing {0} junction {1} for gene {2} {3}'.format(junctions[i].junction_type,
+                                                                                      junctions[i].name,
+                                                                                      junctions[i].gene_symbol,
+                                                                                      junctions[i].gene_id,
+                                                                                  ))
+                logger.info(f)
 
         # ---- Single threaded for loop ----
-        for jx in tqdm.tqdm(junctions,
-                            total=len(junctions),
-                            desc='Processing {0} Junctions'.format(rma.jxn_type[0]),
-                            ):
-
-            logger.info('>>>>>> Doing {0} junction {1} for gene {2} {3}'.format(jx.junction_type,
-                                                                                  jx.name,
-                                                                                  jx.gene_symbol,
-                                                                                  jx.gene_id,
-                                                                                  ))
-            logger.info(translate_one_partial(jx))
-
-    return True
+#         for jx in tqdm.tqdm(junctions,
+#                             total=len(junctions),
+#                             desc='Processing {0} Junctions'.format(rma.jxn_type[0]),
+#                             ):
+# 
+#             logger.info('>>>>>> Doing {0} junction {1} for gene {2} {3}'.format(jx.junction_type,
+#                                                                                   jx.name,
+#                                                                                   jx.gene_symbol,
+#                                                                                   jx.gene_id,
+#                                                                                   ))
+#             logger.info(translate_one_partial(jx))
+# 
+#     return True
 
 
 def _translate_one(junction: Junction,
@@ -368,9 +368,9 @@ def main():
                         type=argparse.FileType('r'),
                         )
 
-    # parser.add_argument('-n', '--num_threads', help='number of threads for concurrency [default: 6]',
-    #                     default=6,
-    #                     type=int)
+    parser.add_argument('-n', '--num_threads', help='number of threads for concurrency [default: 6]',
+                        default=6,
+                        type=int)
 
     parser.add_argument('-o', '--out',
                         help='name of the output files [default: psq_out]',
